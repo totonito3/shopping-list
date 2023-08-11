@@ -34,6 +34,23 @@ itemList.addEventListener("click", removeItem);
 
 clear.addEventListener("click", clearAll);
 
+filter.addEventListener("input", filterDown);
+
+function filterDown(e) {
+  const text = e.target.value.toLowerCase();
+  let allList = Array.from(itemList.children);
+
+  allList.forEach((item) => {
+    const itemText = item.innerText.toLowerCase();
+
+    if (itemText.indexOf(text) != -1) {
+      item.style.display = "flex";
+    } else {
+      item.style.display = "none";
+    }
+  });
+}
+
 function removeItem(e) {
   if (e.target.parentElement.classList.contains("remove-item")) {
     if (confirm("Are you sure?")) {
