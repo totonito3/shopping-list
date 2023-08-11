@@ -1,10 +1,11 @@
 const inputForm = document.querySelector("#item-form");
 const itemInput = document.querySelector("#item-input");
-const inputList = document.querySelector("#item-list");
+const itemList = document.querySelector("#item-list");
 const submit_button = document.querySelector("button");
+const clear = document.querySelector("#clear");
+const filter = document.querySelector("#filter");
 
 document.querySelector("#item-list").innerHTML = "";
-// input.addEventListener("keydown", retrieveEntry);
 
 inputForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -23,13 +24,38 @@ inputForm.addEventListener("submit", (e) => {
   li.appendChild(button);
 
   document.querySelector("#item-list").appendChild(li);
+  checkUI();
   itemInput.value = "";
 
-  //li.innerText = userInput;
   console.log(li);
 });
 
-// function retrieveEntry(e) {
-//   console.log(e.target.value);
-//   return e.target.value;
-// }
+itemList.addEventListener("click", removeItem);
+
+clear.addEventListener("click", clearAll);
+
+function removeItem(e) {
+  if (e.target.parentElement.classList.contains("remove-item")) {
+    if (confirm("Are you sure?")) {
+      e.target.parentElement.parentElement.remove();
+    }
+  }
+  checkUI();
+}
+
+function clearAll(e) {
+  itemList.innerHTML = "";
+  checkUI();
+}
+
+function checkUI() {
+  if (itemList.innerHTML === "") {
+    clear.style.display = "none";
+    filter.style.display = "none";
+  } else {
+    clear.style.display = "block";
+    filter.style.display = "block";
+  }
+}
+
+checkUI();
