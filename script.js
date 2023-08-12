@@ -4,18 +4,38 @@ const itemList = document.querySelector("#item-list");
 const submit_button = document.querySelector("button");
 const clear = document.querySelector("#clear");
 const filter = document.querySelector("#filter");
+const itemArray = [];
 
 document.querySelector("#item-list").innerHTML = "";
 
-inputForm.addEventListener("submit", (e) => {
+inputForm.addEventListener("submit", onAddItemSubmit);
+
+itemList.addEventListener("click", removeItem);
+
+clear.addEventListener("click", clearAll);
+
+filter.addEventListener("input", filterDown);
+
+function onAddItemSubmit(e) {
   e.preventDefault();
   const userInput = itemInput.value;
   if (userInput === "") {
     alert("Please enter an item you wish to add.");
     return;
   }
+
+  addItemToDom(userInput);
+
+  addItemToStorage(itemArray);
+
+  checkUI();
+  itemInput.value = "";
+  console.log("ITEM ARRAYY ", itemArray);
+}
+
+function addItemToDom(item) {
   const li = document.createElement("li");
-  li.appendChild(document.createTextNode(userInput));
+  li.appendChild(document.createTextNode(item));
   const button = document.createElement("button");
   button.classList.add("remove-item", "btn-link", "text-red");
   const i = document.createElement("i");
@@ -24,17 +44,8 @@ inputForm.addEventListener("submit", (e) => {
   li.appendChild(button);
 
   document.querySelector("#item-list").appendChild(li);
-  checkUI();
-  itemInput.value = "";
-
-  console.log(li);
-});
-
-itemList.addEventListener("click", removeItem);
-
-clear.addEventListener("click", clearAll);
-
-filter.addEventListener("input", filterDown);
+  itemArray.push(li);
+}
 
 function filterDown(e) {
   const text = e.target.value.toLowerCase();
@@ -54,15 +65,23 @@ function filterDown(e) {
 function removeItem(e) {
   if (e.target.parentElement.classList.contains("remove-item")) {
     if (confirm("Are you sure?")) {
-      e.target.parentElement.parentElement.remove();
+      let currentList = e.target.parentElement.parentElement;
+      currentList.remove();
+      itemArray.splice(itemArray.indexOf(currentList), 1);
+      addItemToStorage(itemArray);
     }
   }
   checkUI();
+  console.log("DAMMNN ", itemArray);
 }
 
 function clearAll(e) {
-  itemList.innerHTML = "";
-  checkUI();
+  if (confirm("Are you sure? ")) {
+    itemList.innerHTML = "";
+    itemArray.splice(0, itemArray.length);
+    addItemToStorage(itemArray);
+    checkUI();
+  }
 }
 
 function checkUI() {
@@ -75,4 +94,23 @@ function checkUI() {
   }
 }
 
+function addItemToStorage(items) {
+  let textArray = [];
+  let text = "";
+  items.forEach((i) => {
+    text = i.innerText;
+    textArray.push(text);
+  });
+  localStorage.setItem("items", JSON.stringify(textArray));
+}
+
+function fetchItemFromStorage() {
+  let itemArrayFromStorage = JSON.parse(localStorage.getItem("items"));
+
+  itemArrayFromStorage.forEach((item) => {
+    addItemToDom(item);
+  });
+}
+
+fetchItemFromStorage();
 checkUI();
