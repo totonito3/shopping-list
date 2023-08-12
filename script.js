@@ -16,11 +16,70 @@ clear.addEventListener("click", clearAll);
 
 filter.addEventListener("input", filterDown);
 
+itemList.addEventListener("click", editItem);
+
+function editItem(e) {
+  if (e.target.tagName === "LI") {
+    itemInput.value = e.target.innerText;
+
+    itemList.querySelectorAll("li").forEach((list) => {
+      list.classList.remove("edit-mode");
+    });
+    e.target.classList.add("edit-mode");
+    submit_button.innerHTML = '<i class="fa-solid fa-pen"></i>  Update Item';
+    submit_button.style.backgroundColor = "#228B22";
+    submit_button.addEventListener("click", (event) => {
+      console.log("OHHHHHH ", itemArray.indexOf(e.target));
+      //
+      //console.log("FIUUUUK ", itemArray);
+      //itemArray.splice(itemArray.indexOf(e.target), 1);
+
+      // let currentList = e.target.parentElement.parentElement;
+      currentList = e.target;
+      //e.target.remove();
+      //itemArray.splice(itemArray.indexOf(currentList), 1);
+      //addItemToDom(itemInput.value);
+      //    addItemToDom(itemInput.value);
+      //itemArray.splice(itemArray.indexOf(currentList), 1);
+      //delete itemArray[currentList];
+      //     e.target.remove();
+      //     console.log("YOU DO YOU  ", itemArray.indexOf(currentList));
+
+      itemArray.splice(itemArray.indexOf(e.target), 1);
+      // itemArray.push(currentList);
+      addItemToStorage(itemArray);
+
+      //
+
+      //removeItem(e);
+
+      // itemArray.push(itemInput.value);
+      //addItemToStorage(itemArray);
+      //fetchItemFromStorage();
+    });
+  }
+}
+
 function onAddItemSubmit(e) {
+  let editing = false;
   e.preventDefault();
+
   const userInput = itemInput.value;
   if (userInput === "") {
     alert("Please enter an item you wish to add.");
+    return;
+  }
+
+  itemArray.forEach((i) => {
+    if (i.classList.contains("edit-mode")) {
+      editing = true;
+    }
+  });
+
+  // itemArray[1].classList.contains('edit-mode')
+
+  if (editing) {
+    console.log("NAAA NEXT  ");
     return;
   }
 
@@ -95,6 +154,7 @@ function checkUI() {
 }
 
 function addItemToStorage(items) {
+  localStorage.clear();
   let textArray = [];
   let text = "";
   items.forEach((i) => {
