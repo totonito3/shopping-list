@@ -55,11 +55,22 @@ function onAddItemSubmit(e) {
   e.preventDefault();
 
   const userInput = itemInput.value;
+  let duplicate = false;
   if (userInput === "") {
     alert("Please enter an item you wish to add.");
     return;
   }
-
+  itemList.querySelectorAll("li").forEach((li) => {
+    if (userInput === li.innerText) {
+      duplicate = true;
+    }
+  });
+  if (duplicate) {
+    alert(
+      "This item is already included in your shopping list. Please add a new item."
+    );
+    return;
+  }
   addItemToDom(userInput);
 
   addItemToStorage(itemArray);
@@ -158,8 +169,6 @@ function isEditable() {
   });
 
   return editing;
-
-  // itemArray[1].classList.contains('edit-mode')
 }
 
 fetchItemFromStorage();
