@@ -18,6 +18,10 @@ filter.addEventListener("input", filterDown);
 
 itemList.addEventListener("click", editItem);
 
+if (itemList.querySelectorAll("li").length == 0) {
+  checkUI();
+}
+
 function editItem(e) {
   if (e.target.tagName === "LI") {
     itemInput.value = e.target.innerText;
