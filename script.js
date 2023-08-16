@@ -39,9 +39,13 @@ function editItem(e) {
       if (editMode) {
         const itemToEdit = itemList.querySelector(".edit-mode");
 
-        itemArray.splice(itemArray.indexOf(itemToEdit), 1);
-        itemToEdit.classList.remove("edit-mode");
-        itemToEdit.remove();
+        if (itemInput.value.length != 0) {
+          itemArray.splice(itemArray.indexOf(itemToEdit), 1);
+          itemToEdit.classList.remove("edit-mode");
+          itemToEdit.remove();
+        } else {
+          return;
+        }
         addItemToStorage(itemArray);
         editMode = false;
       }
@@ -60,6 +64,15 @@ function onAddItemSubmit(e) {
 
   const userInput = itemInput.value;
   let duplicate = false;
+
+  let items = itemList.querySelectorAll("li");
+
+  items.forEach((item) => {
+    if (item.classList.contains("edit-mode")) {
+      editItem(e);
+    }
+  });
+
   if (userInput === "") {
     alert("Please enter an item you wish to add.");
     return;
@@ -81,7 +94,6 @@ function onAddItemSubmit(e) {
 
   checkUI();
   itemInput.value = "";
-  console.log("ITEM ARRAYY ", itemArray);
 }
 
 function addItemToDom(item) {
@@ -123,7 +135,6 @@ function removeItem(e) {
     }
   }
   checkUI();
-  console.log("DAMMNN ", itemArray);
 }
 
 function clearAll(e) {
