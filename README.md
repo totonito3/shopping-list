@@ -2,7 +2,7 @@
 
 Welcome to the Shopping List Manager! This web application allows you to manage your shopping list efficiently, providing features to add, edit, remove, filter, and clear items.
 
-![Shopping List](screenshot.png)
+
 
 ## Features
 
@@ -14,14 +14,14 @@ Welcome to the Shopping List Manager! This web application allows you to manage 
 
 ## Demo
 
-Experience the functionality firsthand by checking out the live demo of the project [here](https://your-demo-link.com).
+Experience the functionality firsthand by checking out the live demo of the project [here](https://vocal-druid-b0f8af.netlify.app).
 
 ## Getting Started
 
 To run this project locally, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/your-repo.git`
-2. Navigate to the project directory: `cd your-repo`
+1. Clone the repository: `git clone https://github.com/totonito3/shopping-list.git`
+2. Navigate to the project directory: `cd shopping-list`
 3. Open the `index.html` file in your preferred web browser.
 
 ## How It Works
@@ -46,6 +46,3 @@ This project leverages JavaScript for dynamic interaction with the shopping list
 
 Contributions are welcome! If you find any issues or have suggestions for improvements, feel free to open an issue or create a pull request. Please make sure to follow the [code of conduct](CODE_OF_CONDUCT.md).
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
